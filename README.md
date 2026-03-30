@@ -35,8 +35,11 @@ npm install
 Make sure you create a `.env` file in the `backend` folder with your credentials:
 ```env
 PORT=5000
-MONGODB_URI=your_mongo_connection_string
+CONNECTION_STRING=your_mongo_connection_string
 ACCESS_TOKEN_SECRET=your_jwt_secret
+# Optional: comma-separated list for CORS (defaults to allow all if not set)
+ALLOWED_ORIGINS=http://localhost:5173,http://localhost:3000
+NODE_ENV=development (development or production)
 ```
 
 Start the backend server:
