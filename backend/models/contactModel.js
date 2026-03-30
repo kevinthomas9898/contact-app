@@ -13,10 +13,12 @@ const contactSchema = mongoose.Schema({
     email: {
         type: String,
         require: [true, "Please add email address"],
+        unique: [true, "Email address already taken"],
     },
     phone: {
         type: String,
         require: [true, "Please add phone number"],
+        unique: [true, "Phone number already taken"],
     }
 },
     {
