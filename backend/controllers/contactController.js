@@ -14,6 +14,7 @@ const createContact = asyncHandler(async (req, res) => {
     }
 
     const existingContact = await Contacts.findOne({
+        user_id: req.user.id,
         $or: [{ email }, { phone }],
     });
 

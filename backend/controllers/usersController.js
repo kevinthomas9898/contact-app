@@ -1,6 +1,6 @@
 const asyncHandler = require("express-async-handler");
-const User = require("../models/userModel")
-const bcrypt = require("bcrypt")
+const User = require("../models/userModel");
+const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const registerUser = asyncHandler(async (req, res) => {
@@ -18,7 +18,7 @@ const registerUser = asyncHandler(async (req, res) => {
         throw new Error("User already exists");
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcryptjs.hash(password, 10);
 
     const user = await User.create({
         username,
@@ -43,7 +43,7 @@ const loginUser = asyncHandler(async (req, res) => {
     const user = await User.findOne({ email })
 
     //compare passwords with hashed-password
-    if (user && (await bcrypt.compare(password, user.password))) {
+    if (user && (await bcryptjs.compare(password, user.password))) {
         const accessToken = jwt.sign({
             user: {
                 username: user.username,
@@ -59,11 +59,10 @@ const loginUser = asyncHandler(async (req, res) => {
         res.status(401);
         throw new Error("Password is not valid")
     }
-    res.status(200).json({ message: "Login" });
 })
 
-const currectUserInfo = asyncHandler(async (req, res) => {
+const currentUserInfo = asyncHandler(async (req, res) => {
     res.status(200).json(req.user);
 })
 
-module.exports = { registerUser, loginUser, currectUserInfo }
+module.exports = { registerUser, loginUser, currentUserInfo }

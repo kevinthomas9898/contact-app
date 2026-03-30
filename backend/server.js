@@ -6,7 +6,13 @@ const dotenv = require("dotenv").config();
 
 connectDB();
 const app = express();
-app.use(cors());
+
+// CORS configuration - restrict to allowed origins
+const corsOptions = {
+    origin: process.env.ALLOWED_ORIGINS?.split(','),
+    credentials: true,
+};
+app.use(cors(corsOptions));
 
 const PORT = process.env.PORT;
 
